@@ -173,50 +173,26 @@ async function getPosts(req, res)
     {
         const id = req.query.id
         const userId = req.query.userid
+        const pageNumber = req.query.pageNumber || 1
+        let whereFilter = {}
+        if(id)
+            whereFilter.id = id
+        if(userId)
+            whereFilter.userId = userId
 
-        let posts
-        if(id && userId)
-        {
-            posts = await PostModel.findAll({include:{
+        const posts = await PostModel.findAll({include:[{
                 model: UserModel,
                 as:'user'
-            },
-            where: {
-                id,
-                userId
-            }})
-        }
-        else if(id && !userId)
-        {
-            posts = await PostModel.findAll({include:{
-                model: UserModel,
-                as:'user'
-            },
-            where: {
-                id
-            }})
-        }
-        else if(userId && !id)
-        {
-            posts = await PostModel.findAll({include:{
-                model: UserModel,
-                as:'user'
-            }, 
-            limit: 10,
-            where: {
-                userId
-            }})
-        }
-        else if(!id && !userId)
-        {
-            posts = await PostModel.findAll({include:{
-                model: UserModel,
-                as:'user'
-            }, 
-            limit: 10,})
-        }
+            }, { model:ReactionModel, as:'reactions' }],
+            where: whereFilter,
+            offset: pageNumber*10-10,
+            limit:10 })
+
+        const pages = Math.ceil((await PostModel.findAndCountAll({
+            where:whereFilter
+        })).count/10)
     
-        return res.status(201).json([...posts])
+        return res.status(201).json({pages, posts:[...posts]})
     }
     catch(err)
     {

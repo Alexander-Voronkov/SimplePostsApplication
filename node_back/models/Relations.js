@@ -2,13 +2,14 @@ import PostModel from './PostModel.js'
 import ReactionModel from './ReactionModel.js'
 import UserModel from './UserModel.js'
 
-PostModel.belongsTo(UserModel, {as:'user'})
-PostModel.hasMany(ReactionModel)
-
-ReactionModel.belongsTo(PostModel)
-
 UserModel.hasMany(PostModel)
+PostModel.hasMany(ReactionModel)
 UserModel.hasMany(ReactionModel)
+
+PostModel.belongsTo(UserModel, {foreignKey:'userId'})
+ReactionModel.belongsTo(PostModel, {foreignKey:'postId'})
+ReactionModel.belongsTo(UserModel, {foreignKey:'userId'})
+
 
 export {PostModel}
 export {ReactionModel}

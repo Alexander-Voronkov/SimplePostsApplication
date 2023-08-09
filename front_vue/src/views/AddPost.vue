@@ -24,7 +24,7 @@ export default {
         Editor
     },
     methods:{
-        submitAdd: async function(){
+        async submitAdd(){
             const content = this.$refs.editor.getContent()
             const converter = new QuillDeltaToHtmlConverter(content.ops, {})
             const converted = converter.convert()

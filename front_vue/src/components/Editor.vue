@@ -15,7 +15,9 @@ export default {
             modules : {
                 name: 'blotFormatter',  
                 module: BlotFormatter, 
-                options: {/* options */}
+                options: {
+                    
+                }
             },
             content:''
         }

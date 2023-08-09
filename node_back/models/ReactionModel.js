@@ -8,7 +8,7 @@ const ReactionModel = db.define("reactions", {
         primaryKey: true,
         allowNull: false
     },
-    reactionType:{
+    type:{
         type: sequelize.STRING,
         allowNull: false
     }

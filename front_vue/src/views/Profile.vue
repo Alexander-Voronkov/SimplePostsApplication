@@ -63,44 +63,42 @@ export default {
             this.avatar = e.target.files[0]
         },
     },
-    beforeRouteEnter(to, from, next){
-        next(async vm=>{
-            const res = await fetch('/back/profile', {
-                headers:{
-                    token: vm.storage.state.jwtStore.token
-                },
-                method: 'get'
-            })
-
-            if(res.status === 403)
-            {
-                toastr.error(res.status + res.statusText + ' You are not authorized')
-                vm.storage.commit('setToken', null)
-                localStorage.removeItem('token')
-                router.push('/login')
-            }
-            else
-            {
-                const bodyUser = (await res.json()).datatosend
-                vm.email = bodyUser.email
-                vm.name = bodyUser.name
-                vm.birthDate = new Date(bodyUser.birthDate).toISOString().split('T')[0]
-                vm.phoneNumber = bodyUser.phoneNumber
-                if(bodyUser.avatar)
-                {
-                    const arr = new Uint8Array(bodyUser.avatar.data.data)
-                    const file = new File([arr], vm.email, { type: bodyUser.avatar.mime })
-                    const dt = new DataTransfer()
-                    dt.items.add(file)
-                    const avatarInput = document.getElementById('avatarInput')
-                    avatarInput.files = dt.files
-                    avatarInput.dispatchEvent(new Event('change', {
-                        bubbles: true,
-                        cancelable: true
-                    }))
-                }
-            }
+    async mounted() {
+        const res = await fetch('/back/profile', {
+            headers:{
+                token: this.storage.state.jwtStore.token
+            },
+            method: 'get'
         })
+
+        if(res.status === 403)
+        {
+            toastr.error(res.status + res.statusText + ' You are not authorized')
+            this.storage.commit('setToken', null)
+            localStorage.removeItem('token')
+            router.push('/login')
+        }
+        else
+        {
+            const bodyUser = (await res.json()).datatosend
+            this.email = bodyUser.email
+            this.name = bodyUser.name
+            this.birthDate = new Date(bodyUser.birthDate).toISOString().split('T')[0]
+            this.phoneNumber = bodyUser.phoneNumber
+            if(bodyUser.avatar)
+            {
+                const arr = new Uint8Array(bodyUser.avatar.data.data)
+                const file = new File([arr], this.email, { type: bodyUser.avatar.mime })
+                const dt = new DataTransfer()
+                dt.items.add(file)
+                const avatarInput = document.getElementById('avatarInput')
+                avatarInput.files = dt.files
+                avatarInput.dispatchEvent(new Event('change', {
+                    bubbles: true,
+                    cancelable: true
+                }))
+            }
+        }
     }
 }
 </script>

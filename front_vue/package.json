@@ -20,6 +20,7 @@
     "quill-blot-formatter": "^1.0.5",
     "quill-delta-to-html": "^0.12.1",
     "sass": "^1.64.2",
+    "socket.io-client": "^4.7.2",
     "toastr": "^2.1.4",
     "vue": "^3.2.47",
     "vue-router": "4",

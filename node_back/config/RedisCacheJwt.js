@@ -11,7 +11,7 @@ class RedisCacheJWT {
         this.client.connect()
 
         this.client.on("connect", () => {
-            console.log("Redis Jwt Cache connected")
+            console.log("Redis Cache connected")
         });
 
         // Обработка ошибок подключения к Redis
