@@ -53,7 +53,7 @@ export default {
             {
                 const body = await res.json()
                 toastr.success('Your post has been successfully added!')
-                router.push('/posts?id='+ body.id)
+                router.push('/post?id='+ body.id)
             }
         }
     }

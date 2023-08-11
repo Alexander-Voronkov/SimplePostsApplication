@@ -23,7 +23,7 @@ export default {
         },
         socket:{
             type: Object,
-            required: true
+            required: false
         }
     },
     data(){
@@ -54,18 +54,20 @@ export default {
     },
     methods:{
         async like(){
-            this.socket.emit('reaction', JSON.stringify({
-                type: 'like',
-                token: this.store.state.jwtStore.token,
-                postId: this.post.id
-            }))
+            if(this.socket)
+                this.socket.emit('reaction', JSON.stringify({
+                    type: 'like',
+                    token: this.store.state.jwtStore.token,
+                    postId: this.post.id
+                }))
         },
         async dislike(){
-            this.socket.emit('reaction', JSON.stringify({
-                type: 'dislike',
-                token: this.store.state.jwtStore.token,
-                postId: this.post.id
-            }))
+            if(this.socket)
+                this.socket.emit('reaction', JSON.stringify({
+                    type: 'dislike',
+                    token: this.store.state.jwtStore.token,
+                    postId: this.post.id
+                }))
         }
     }
 }

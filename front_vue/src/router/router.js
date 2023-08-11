@@ -4,6 +4,7 @@ import Register from '../views/Register.vue'
 import Home from '../views/Home.vue'
 import AddPost from '../views/AddPost.vue'
 import Profile from '../views/Profile.vue'
+import ShowSinglePost from '../views/ShowSinglePost.vue'
 import insertJWTMiddleware from '../middleware/InsertJwtMiddleware'
 
 const routes = [
@@ -12,6 +13,7 @@ const routes = [
   { path: '/posts', component: Home, meta: { requiresAuth: true } },
   { path: '/addpost', component: AddPost, meta: { requiresAuth: true } },
   { path: '/profile', component: Profile, meta: { requiresAuth: true } },
+  { path: '/post', component: ShowSinglePost, meta: {requiresAuth: true} }
 ]
 
 const router = createRouter({

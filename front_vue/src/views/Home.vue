@@ -92,10 +92,9 @@
             Post
         },
         async mounted(){
-            const id = this.$route.query.id
             const userid = this.$route.query.userid
             const pageNumber = this.$route.query.pageNumber
-            const res = await fetch('/back/posts?id=' + (id || '') +'&userid='+(userid||'')+'&pageNumber='+(pageNumber||''), {
+            const res = await fetch('/back/posts?userid='+(userid||'')+'&pageNumber='+(pageNumber||''), {
                 headers:{
                     token: this.storage.state.jwtStore.token
                 },
